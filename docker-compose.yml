@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: caast_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: caast2025
+      POSTGRES_DB: caast_servicios
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - caast_network
+
+  backend:
+    build: ./backend
+    container_name: caast_backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: caast_servicios
+      DB_USER: postgres
+      DB_PASSWORD: caast2025
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - caast_network
+    command: npm run dev
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  caast_network:
+    driver: bridge

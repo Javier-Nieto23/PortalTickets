@@ -1,0 +1,23 @@
+{
+  "name": "caast-backend",
+  "version": "1.0.0",
+  "description": "Backend para sistema de hojas de servicio CAAST",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:setup": "psql -U postgres -f database/schema.sql"
+  },
+  "keywords": ["hojas-servicio", "api", "express", "postgresql"],
+  "author": "CAAST",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "pdfkit": "^0.13.0",
+    "bcrypt": "^5.1.1"
+  }
+}

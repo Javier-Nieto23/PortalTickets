@@ -1,0 +1,252 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* Barra superior */
+.dashboard-nav {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+
+.menu-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-brand h2 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.user-name {
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.user-role {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.btn-logout {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-logout:hover {
+  background: white;
+  color: #FF6B35;
+}
+
+/* Layout principal */
+.dashboard-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 280px;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.closed {
+  width: 0;
+  box-shadow: none;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  color: #5a6c7d;
+  font-size: 0.95rem;
+}
+
+.menu-item:hover {
+  background: #f8f9fa;
+  color: #FF6B35;
+}
+
+.menu-item.active {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.menu-icon {
+  font-size: 1.3rem;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-label {
+  flex: 1;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.version {
+  color: #95a5a6;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Contenido principal */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-header {
+  padding: 2rem;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.content-header h1 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 2rem;
+}
+
+.content-body {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background: #f5f6fa;
+}
+
+/* Scrollbar personalizado */
+.sidebar-menu::-webkit-scrollbar,
+.content-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track,
+.content-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb,
+.content-body::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover,
+.content-body::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-content {
+    padding: 1rem;
+  }
+
+  .nav-brand h2 {
+    font-size: 1.2rem;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: 0;
+    z-index: 99;
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+
+  .content-body {
+    padding: 1rem;
+  }
+}
