@@ -2,8 +2,7 @@ import express from 'express';
 import { 
   obtenerEmpresas, 
   obtenerEmpresaPorId, 
-  crearEmpresa, 
-  buscarOCrearEmpresa,
+  crearEmpresa,
   actualizarEmpresa, 
   eliminarEmpresa 
 } from '../controllers/empresaController.js';
@@ -15,7 +14,6 @@ const router = express.Router();
 router.get('/', verificarToken, obtenerEmpresas);
 router.get('/:id', verificarToken, obtenerEmpresaPorId);
 router.post('/', verificarToken, crearEmpresa);
-router.post('/find-or-create', verificarToken, buscarOCrearEmpresa);
 router.put('/:id', verificarToken, actualizarEmpresa);
 router.delete('/:id', verificarToken, eliminarEmpresa);
 

@@ -67,31 +67,7 @@ export const crearEmpresa = async (req, res) => {
   }
 };
 
-// Buscar o crear empresa
-export const buscarOCrearEmpresa = async (req, res) => {
-  try {
-    const { Nombre_Empresa, rfc } = req.body;
 
-    if (!Nombre_Empresa) {
-      return res.status(400).json({ 
-        mensaje: 'El nombre de la empresa es obligatorio' 
-      });
-    }
-
-    const empresa = await Empresa.findOrCreate(Nombre_Empresa, rfc);
-
-    res.json({ 
-      mensaje: empresa ? 'Empresa encontrada' : 'Empresa creada',
-      empresa 
-    });
-  } catch (error) {
-    console.error('Error al buscar/crear empresa:', error);
-    res.status(500).json({ 
-      mensaje: 'Error al buscar/crear empresa',
-      error: error.message 
-    });
-  }
-};
 
 // Actualizar empresa
 export const actualizarEmpresa = async (req, res) => {
