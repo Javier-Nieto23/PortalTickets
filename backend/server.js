@@ -5,6 +5,7 @@ import ticketRoutes from './routes/tickets.js';
 import authRoutes from './routes/auth.js';
 import hojasServicioRoutes from './routes/hojasServicio.js';
 import clientesRoutes from './routes/clientes.js';
+import equiposRoutes from './routes/equipos.js';
 import pool from './config/database.js';
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
       auth: '/api/auth',
       hojasServicio: '/api/hojas-servicio',
       clientes: '/api/clientes',
+      equipos: '/api/equipos',
       tickets: '/api/tickets (legacy)'
     }
   });
@@ -40,6 +42,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/hojas-servicio', hojasServicioRoutes);
 app.use('/api/clientes', clientesRoutes);
+app.use('/api/equipos', equiposRoutes);
 app.use('/api/tickets', ticketRoutes); // Legacy
 
 // Manejo de errores 404

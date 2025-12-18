@@ -1,16 +1,21 @@
 import TicketModel from '../models/Ticket.js';
 
 export const ticketController = {
-  // GET /api/tickets - Obtener tickets del usuario logueado
+  // GET /api/tickets - Obtener tickets del usuario logueado o todos si es admin
   getAll: async (req, res) => {
     try {
-      const { usuarioId } = req.query;
+      const { usuarioId, rol } = req.query;
 
       if (!usuarioId) {
         return res.status(400).json({ message: 'ID de usuario requerido' });
       }
 
-      const tickets = await TicketModel.findByUserId(usuarioId);
+      // Si es administrador, mostrar todos los tickets
+      // Si es usuario normal, solo sus tickets
+      const tickets = rol === 'admin' 
+        ? await TicketModel.findAll()
+        : await TicketModel.findByUserId(usuarioId);
+      
       res.json(tickets);
     } catch (error) {
       console.error('Error al obtener tickets:', error);
