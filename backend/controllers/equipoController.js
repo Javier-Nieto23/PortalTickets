@@ -3,12 +3,12 @@ import { Equipo } from '../models/Equipo.js';
 // Crear nuevo equipo
 export const crearEquipo = async (req, res) => {
   try {
-    const { usuario_id, tipo_equipo, marca, modelo, numero_serie, nombre_usuario, sistema_operativo, procesador, ram, disco_duro, observaciones } = req.body;
+    const { usuario_id, tipo_equipo, marca, modelo, numero_serie, Nombre_Empleado, sistema_operativo, procesador, ram, disco_duro, observaciones } = req.body;
 
     // Validar campos requeridos
-    if (!usuario_id || !tipo_equipo || !marca || !modelo || !numero_serie || !nombre_usuario) {
+    if (!usuario_id || !tipo_equipo || !marca || !modelo || !numero_serie || !Nombre_Empleado) {
       return res.status(400).json({ 
-        mensaje: 'Los campos Usuario, Tipo de Equipo, Marca, Modelo, Número de Serie y Nombre de Usuario son obligatorios' 
+        mensaje: 'Los campos Usuario, Tipo de Equipo, Marca, Modelo, Número de Serie y Nombre del Empleado son obligatorios' 
       });
     }
 
@@ -26,7 +26,7 @@ export const crearEquipo = async (req, res) => {
       marca,
       modelo,
       numero_serie,
-      nombre_usuario,
+      Nombre_Empleado,
       sistema_operativo,
       procesador,
       ram,
@@ -50,7 +50,7 @@ export const crearEquipo = async (req, res) => {
 // Obtener equipos del usuario autenticado
 export const obtenerMisEquipos = async (req, res) => {
   try {
-    const usuario_id = req.usuario.id;
+    const usuario_id = req.usuario.ID_usuario;
     const equipos = await Equipo.findByUsuarioId(usuario_id);
     res.json(equipos);
   } catch (error) {
@@ -87,7 +87,7 @@ export const obtenerEquipoPorId = async (req, res) => {
     }
 
     // Verificar que el usuario tenga permiso (admin o dueño del equipo)
-    if (req.usuario.rol !== 'administrador' && equipo.usuario_id !== req.usuario.id) {
+    if (req.usuario.rol !== 'admin' && equipo.usuario_id !== req.usuario.ID_usuario) {
       return res.status(403).json({ mensaje: 'No tienes permiso para ver este equipo' });
     }
 
@@ -112,7 +112,7 @@ export const actualizarEquipo = async (req, res) => {
     }
 
     // Verificar permisos
-    if (req.usuario.rol !== 'administrador' && equipo.usuario_id !== req.usuario.id) {
+    if (req.usuario.rol !== 'admin' && equipo.usuario_id !== req.usuario.ID_usuario) {
       return res.status(403).json({ mensaje: 'No tienes permiso para modificar este equipo' });
     }
 
@@ -131,7 +131,7 @@ export const actualizarEquipo = async (req, res) => {
       marca: req.body.marca || equipo.marca,
       modelo: req.body.modelo || equipo.modelo,
       numero_serie: req.body.numero_serie || equipo.numero_serie,
-      nombre_usuario: req.body.nombre_usuario || equipo.nombre_usuario,
+      Nombre_Empleado: req.body.Nombre_Empleado || equipo.Nombre_Empleado,
       sistema_operativo: req.body.sistema_operativo,
       procesador: req.body.procesador,
       ram: req.body.ram,
@@ -155,10 +155,10 @@ export const actualizarEquipo = async (req, res) => {
 // Crear equipo manualmente (admin) con empresa personalizada
 export const crearEquipoManual = async (req, res) => {
   try {
-    const { usuario_id, tipo_equipo, marca, modelo, numero_serie, nombre_usuario, empresa, sistema_operativo, procesador, ram, disco_duro, observaciones } = req.body;
+    const { usuario_id, tipo_equipo, marca, modelo, numero_serie, Nombre_Empleado, empresa, sistema_operativo, procesador, ram, disco_duro, observaciones } = req.body;
 
     // Validar campos requeridos
-    if (!usuario_id || !tipo_equipo || !marca || !modelo || !numero_serie || !nombre_usuario || !empresa) {
+    if (!usuario_id || !tipo_equipo || !marca || !modelo || !numero_serie || !Nombre_Empleado || !empresa) {
       return res.status(400).json({ 
         mensaje: 'Los campos Usuario, Tipo de Equipo, Marca, Modelo, Número de Serie, Nombre del Empleado y Empresa son obligatorios' 
       });
@@ -178,7 +178,7 @@ export const crearEquipoManual = async (req, res) => {
       marca,
       modelo,
       numero_serie,
-      nombre_usuario,
+      Nombre_Empleado,
       empresa,
       sistema_operativo,
       procesador,
@@ -211,7 +211,7 @@ export const eliminarEquipo = async (req, res) => {
     }
 
     // Verificar permisos
-    if (req.usuario.rol !== 'administrador' && equipo.usuario_id !== req.usuario.id) {
+    if (req.usuario.rol !== 'admin' && equipo.usuario_id !== req.usuario.ID_usuario) {
       return res.status(403).json({ mensaje: 'No tienes permiso para eliminar este equipo' });
     }
 

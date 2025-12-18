@@ -14,7 +14,12 @@ export const AuthProvider = ({ children }) => {
       try {
         const parsedUser = JSON.parse(savedUser);
         // Validar que los datos del usuario sean válidos
-        if (parsedUser && parsedUser.id && parsedUser.email) {
+        if (parsedUser && (parsedUser.ID_usuario || parsedUser.id) && parsedUser.email) {
+          // Normalizar ID_usuario si viene como 'id'
+          if (parsedUser.id && !parsedUser.ID_usuario) {
+            parsedUser.ID_usuario = parsedUser.id;
+            delete parsedUser.id;
+          }
           setUser(parsedUser);
         } else {
           // Si los datos están corruptos, limpiar

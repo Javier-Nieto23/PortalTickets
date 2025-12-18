@@ -1,4 +1,5 @@
 import { UserModel } from '../models/User.js';
+import Empresa from '../models/Empresa.js';
 import bcrypt from 'bcrypt';
 
 export const authController = {
@@ -38,12 +39,12 @@ export const authController = {
   // POST /api/auth/register - Registrar nuevo usuario
   register: async (req, res) => {
     try {
-      const { email, password, nombre, apellido, rfc, nombreEmpresa } = req.body;
+      const { email, password, nombre, apellido, rfc, nombreEmpresa, rfcEmpresa } = req.body;
 
       // Validaciones
-      if (!email || !password || !nombre || !apellido || !rfc || !nombreEmpresa) {
+      if (!email || !password || !nombre || !apellido || !nombreEmpresa) {
         return res.status(400).json({ 
-          message: 'Todos los campos son requeridos (email, password, nombre, apellido, RFC y nombre de empresa)' 
+          message: 'Email, password, nombre, apellido y nombre de empresa son requeridos' 
         });
       }
 
@@ -71,6 +72,9 @@ export const authController = {
         });
       }
 
+      // Buscar o crear empresa
+      const empresa = await Empresa.findOrCreate(nombreEmpresa, rfcEmpresa);
+
       // Crear usuario con contraseña cifrada
       const newUser = await UserModel.create({ 
         email, 
@@ -78,7 +82,7 @@ export const authController = {
         nombre, 
         apellido,
         rfc,
-        nombreEmpresa
+        ID_Empresa: empresa.id_empresa
       });
 
       res.status(201).json({

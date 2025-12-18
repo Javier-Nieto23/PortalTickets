@@ -1,6 +1,6 @@
 import './TicketCard.css';
 
-function TicketCard({ ticket, onDelete, onUpdate }) {
+function TicketCard({ ticket, onDelete, onUpdate, isAdmin = false }) {
   const handleStatusChange = (newStatus) => {
     onUpdate(ticket.id, { ...ticket, estado: newStatus });
   };
@@ -52,24 +52,26 @@ function TicketCard({ ticket, onDelete, onUpdate }) {
         )}
       </div>
 
-      <div className="ticket-actions">
-        <select
-          className="status-select"
-          value={ticket.estado}
-          onChange={(e) => handleStatusChange(e.target.value)}
-        >
-          <option value="abierto">Abierto</option>
-          <option value="en progreso">En Progreso</option>
-          <option value="cerrado">Cerrado</option>
-        </select>
+      {isAdmin && (
+        <div className="ticket-actions">
+          <select
+            className="status-select"
+            value={ticket.estado}
+            onChange={(e) => handleStatusChange(e.target.value)}
+          >
+            <option value="abierto">Abierto</option>
+            <option value="en progreso">En Progreso</option>
+            <option value="cerrado">Cerrado</option>
+          </select>
 
-        <button
-          className="btn-delete"
-          onClick={() => onDelete(ticket.id)}
-        >
-          Eliminar
-        </button>
-      </div>
+          <button
+            className="btn-delete"
+            onClick={() => onDelete(ticket.id)}
+          >
+            Eliminar
+          </button>
+        </div>
+      )}
     </div>
   );
 }

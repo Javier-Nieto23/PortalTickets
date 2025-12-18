@@ -9,6 +9,122 @@
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   text-align: center;
+  color: #000;
+}
+
+/* Selección de servicios */
+.services-selection {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.services-selection h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2rem 1.5rem;
+  border-radius: 15px;
+  border: 3px solid transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 12px 24px rgba(255, 107, 53, 0.2),
+    0 6px 12px rgba(255, 107, 53, 0.15);
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.service-card h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Header del servicio seleccionado */
+.ticket-form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.selected-service-header {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid rgba(255, 107, 53, 0.2);
+}
+
+.selected-service-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.service-icon-large {
+  font-size: 2.5rem;
+}
+
+.selected-service-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.user-info-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.user-info-text strong {
+  color: #FF6B35;
+  font-weight: 600;
+}
+
+.btn-back {
+  padding: 0.6rem 1.2rem;
+  background: white;
+  color: #FF6B35;
+  border: 2px solid #FF6B35;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background: #FF6B35;
+  color: white;
+  transform: translateX(-3px);
 }
 
 .user-info-banner {

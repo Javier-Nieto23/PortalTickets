@@ -30,9 +30,9 @@ function Dashboard({ children, activeSection, onSectionChange }) {
 
   const menuItems = [
     { id: 'inicio', label: 'Inicio', icon: '🏠' },
-    { id: 'crear-perfil', label: 'Crear Perfil', icon: '👤' },
+    { id: 'ver-perfil', label: 'Ver Perfil', icon: '👤' },
     { id: 'levantar-ticket', label: 'Levantar Ticket', icon: '🎫' },
-    { id: 'activacion-licencia', label: 'Activación de Licencia', icon: '🔑' },
+    { id: 'censo-equipo', label: 'Censo de Equipo', icon: '💻' },
   ];
 
   return (

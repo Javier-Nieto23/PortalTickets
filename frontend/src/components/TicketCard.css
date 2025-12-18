@@ -149,6 +149,12 @@
   border-color: #646cff;
 }
 
+.status-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(100, 100, 100, 0.2);
+}
+
 .btn-delete {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
@@ -161,6 +167,12 @@
   transition: background-color 0.3s;
 }
 
-.btn-delete:hover {
+.btn-delete:hover:not(:disabled) {
   background: rgba(255, 50, 50, 1);
+}
+
+.btn-delete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(150, 150, 150, 0.5);
 }

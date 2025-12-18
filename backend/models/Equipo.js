@@ -5,7 +5,7 @@ export const Equipo = {
   async create(equipoData) {
     const sql = `
       INSERT INTO equipos (
-        usuario_id, tipo_equipo, marca, modelo, numero_serie, nombre_usuario,
+        usuario_id, tipo_equipo, marca, modelo, numero_serie, Nombre_Empleado,
         sistema_operativo, procesador, ram, disco_duro, observaciones
       )
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
@@ -18,7 +18,7 @@ export const Equipo = {
       equipoData.marca,
       equipoData.modelo,
       equipoData.numero_serie,
-      equipoData.nombre_usuario || null,
+      equipoData.Nombre_Empleado || null,
       equipoData.sistema_operativo || null,
       equipoData.procesador || null,
       equipoData.ram || null,
@@ -34,7 +34,7 @@ export const Equipo = {
   async createManual(equipoData) {
     const sql = `
       INSERT INTO equipos (
-        usuario_id, tipo_equipo, marca, modelo, numero_serie, nombre_usuario,
+        usuario_id, tipo_equipo, marca, modelo, numero_serie, Nombre_Empleado,
         sistema_operativo, procesador, ram, disco_duro, observaciones
       )
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
@@ -47,7 +47,7 @@ export const Equipo = {
       equipoData.marca,
       equipoData.modelo,
       equipoData.numero_serie,
-      equipoData.nombre_usuario || null,
+      equipoData.Nombre_Empleado || null,
       equipoData.sistema_operativo || null,
       equipoData.procesador || null,
       equipoData.ram || null,
@@ -57,16 +57,17 @@ export const Equipo = {
     
     const result = await query(sql, values);
     // Agregar empresa manualmente al resultado
-    result.rows[0].nombre_empresa = equipoData.empresa;
+    result.rows[0].Nombre_Empresa = equipoData.empresa;
     return result.rows[0];
   },
 
   // Obtener equipos de un usuario
   async findByUsuarioId(usuario_id) {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, u.nombre_empresa
+      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
       FROM equipos e
-      JOIN usuarios u ON e.usuario_id = u.id
+      JOIN usuarios u ON e.usuario_id = u.ID_usuario
+      LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
       WHERE e.usuario_id = $1
       ORDER BY e.created_at DESC
     `;
@@ -78,9 +79,10 @@ export const Equipo = {
   // Obtener equipo por ID
   async findById(id) {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, u.nombre_empresa
+      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
       FROM equipos e
-      JOIN usuarios u ON e.usuario_id = u.id
+      JOIN usuarios u ON e.usuario_id = u.ID_usuario
+      LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
       WHERE e.id = $1
     `;
     
@@ -91,9 +93,10 @@ export const Equipo = {
   // Obtener todos los equipos (admin)
   async findAll() {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, u.nombre_empresa
+      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
       FROM equipos e
-      JOIN usuarios u ON e.usuario_id = u.id
+      JOIN usuarios u ON e.usuario_id = u.ID_usuario
+      LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
       ORDER BY e.created_at DESC
     `;
     
@@ -109,7 +112,7 @@ export const Equipo = {
           marca = $2,
           modelo = $3,
           numero_serie = $4,
-          nombre_usuario = $5,
+          Nombre_Empleado = $5,
           sistema_operativo = $6,
           procesador = $7,
           ram = $8,
@@ -125,7 +128,7 @@ export const Equipo = {
       equipoData.marca,
       equipoData.modelo,
       equipoData.numero_serie,
-      equipoData.nombre_usuario || null,
+      equipoData.Nombre_Empleado || null,
       equipoData.sistema_operativo || null,
       equipoData.procesador || null,
       equipoData.ram || null,

@@ -13,9 +13,9 @@ const handleResponse = async (response) => {
 
 // ===== TICKETS =====
 export const ticketService = {
-  // Obtener todos los tickets de un usuario
-  getAll: async (usuarioId) => {
-    const response = await fetch(`${API_URL}/api/tickets?usuarioId=${usuarioId}`);
+  // Obtener todos los tickets de un usuario (o todos si es admin)
+  getAll: async (ID_empleado, rol) => {
+    const response = await fetch(`${API_URL}/api/tickets?usuarioId=${ID_empleado}&rol=${rol || 'usuario'}`);
     return handleResponse(response);
   },
 

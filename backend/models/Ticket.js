@@ -5,7 +5,7 @@ export const TicketModel = {
   // Obtener todos los tickets de un usuario específico
   async findByUserId(usuarioId) {
     const result = await query(
-      'SELECT * FROM tickets WHERE usuario_id = $1 ORDER BY fecha DESC',
+      'SELECT * FROM tickets WHERE ID_empleado = $1 ORDER BY fecha DESC',
       [usuarioId]
     );
     return result.rows;
@@ -44,18 +44,16 @@ export const TicketModel = {
   // Crear nuevo ticket
   async create(ticketData) {
     const result = await query(
-      `INSERT INTO tickets (titulo, descripcion, estado, prioridad, usuario_id, creado_por, empresa, asignado_a)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `INSERT INTO tickets (titulo, descripcion, estado, prioridad, ID_empleado, ID_Empresa)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING *`,
       [
         ticketData.titulo,
         ticketData.descripcion || '',
         ticketData.estado || 'abierto',
         ticketData.prioridad || 'media',
-        ticketData.usuarioId || null,
-        ticketData.creadoPor || 'Usuario desconocido',
-        ticketData.empresa || 'Sin empresa',
-        ticketData.asignadoA || null
+        ticketData.ID_empleado || null,
+        ticketData.ID_Empresa || null
       ]
     );
     return result.rows[0];

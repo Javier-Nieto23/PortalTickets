@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TicketCard from './TicketCard';
 import './TicketList.css';
 
-function TicketList({ tickets, onDelete, onUpdate, loading }) {
+function TicketList({ tickets, onDelete, onUpdate, loading, userRole }) {
   const [filtroEstado, setFiltroEstado] = useState('todos');
   const [filtroPrioridad, setFiltroPrioridad] = useState('todos');
   const [busqueda, setBusqueda] = useState('');
@@ -83,6 +83,7 @@ function TicketList({ tickets, onDelete, onUpdate, loading }) {
               ticket={ticket}
               onDelete={onDelete}
               onUpdate={onUpdate}
+              isAdmin={userRole === 'admin'}
             />
           ))}
         </div>

@@ -6,6 +6,8 @@ import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import TicketList from './components/TicketList';
 import TicketForm from './components/TicketForm';
+import UserProfile from './components/UserProfile';
+import CensoEquipo from './components/CensoEquipo';
 import './App.css';
 
 function AppContent() {
@@ -38,12 +40,12 @@ function AppContent() {
   }, [user]);
 
   const cargarTickets = async () => {
-    if (!user?.id) return;
+    if (!user?.ID_usuario) return;
     
     setLoading(true);
     setError(null);
     try {
-      const data = await ticketService.getAll(user.id);
+      const data = await ticketService.getAll(user.ID_usuario, user.rol);
       setTickets(data);
     } catch (err) {
       setError('Error al cargar los tickets: ' + err.message);
@@ -166,19 +168,20 @@ function AppContent() {
               loading={loading}
               onDelete={handleEliminarTicket}
               onUpdate={handleActualizarTicket}
+              userRole={user?.rol}
             />
           </>
         );
-      case 'crear-perfil':
-        return <div className="section-placeholder">Sección: Crear Perfil (Próximamente)</div>;
+      case 'ver-perfil':
+        return <UserProfile />;
       case 'levantar-ticket':
         return (
           <div className="levantar-ticket-section">
             <TicketForm onTicketCreated={handleCrearTicket} />
           </div>
         );
-      case 'activacion-licencia':
-        return <div className="section-placeholder">Sección: Activación de Licencia (Próximamente)</div>;
+      case 'censo-equipo':
+        return <CensoEquipo />;
       default:
         return <div>Selecciona una opción del menú</div>;
     }

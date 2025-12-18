@@ -5,7 +5,10 @@ export const UserModel = {
   // Buscar usuario por email
   findByEmail: async (email) => {
     const result = await query(
-      'SELECT * FROM usuarios WHERE email = $1',
+      `SELECT u.*, e.Nombre_Empresa, e.rfc as empresa_rfc 
+       FROM usuarios u 
+       LEFT JOIN Empresas e ON u.ID_Empresa = e.ID_Empresa 
+       WHERE u.email = $1`,
       [email]
     );
     return result.rows[0];
@@ -38,16 +41,16 @@ export const UserModel = {
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
 
     const result = await query(
-      `INSERT INTO usuarios (email, password, nombre, apellido, rfc, nombre_empresa, rol, activo) 
+      `INSERT INTO usuarios (email, password, nombre, apellido, rfc, ID_Empresa, rol, activo) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-       RETURNING id, email, nombre, apellido, rfc, nombre_empresa, rol, activo, created_at`,
+       RETURNING ID_usuario, email, nombre, apellido, rfc, ID_Empresa, rol, activo, created_at`,
       [
         userData.email,
         hashedPassword,
         userData.nombre,
         userData.apellido,
         userData.rfc,
-        userData.nombreEmpresa,
+        userData.ID_Empresa,
         userData.rol || 'usuario',
         true
       ]
@@ -59,7 +62,11 @@ export const UserModel = {
   // Obtener usuario por ID
   findById: async (id) => {
     const result = await query(
-      'SELECT id, email, nombre, apellido, rfc, nombre_empresa, rol, activo, created_at FROM usuarios WHERE id = $1',
+      `SELECT u.ID_usuario, u.email, u.nombre, u.apellido, u.rfc, u.ID_Empresa, u.rol, u.activo, u.created_at,
+              e.Nombre_Empresa, e.rfc as empresa_rfc
+       FROM usuarios u
+       LEFT JOIN Empresas e ON u.ID_Empresa = e.ID_Empresa
+       WHERE u.ID_usuario = $1`,
       [id]
     );
     return result.rows[0];
@@ -68,7 +75,11 @@ export const UserModel = {
   // Obtener todos los usuarios (sin contraseñas)
   findAll: async () => {
     const result = await query(
-      'SELECT id, email, nombre, apellido, rfc, nombre_empresa, rol, activo, created_at FROM usuarios ORDER BY created_at DESC'
+      `SELECT u.ID_usuario, u.email, u.nombre, u.apellido, u.rfc, u.ID_Empresa, u.rol, u.activo, u.created_at,
+              e.Nombre_Empresa, e.rfc as empresa_rfc
+       FROM usuarios u
+       LEFT JOIN Empresas e ON u.ID_Empresa = e.ID_Empresa
+       ORDER BY u.created_at DESC`
     );
     return result.rows;
   }

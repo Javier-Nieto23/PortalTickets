@@ -21,7 +21,7 @@ export const verificarToken = async (req, res, next) => {
       // Intentar parsear el token como JSON (contiene info del usuario)
       try {
         const userData = JSON.parse(decodeURIComponent(token));
-        usuario = await UserModel.findById(userData.id);
+        usuario = await UserModel.findById(userData.ID_usuario || userData.id);
       } catch {
         // Si falla el parse, asumir que es un email
         usuario = await UserModel.findByEmail(token);
@@ -39,12 +39,13 @@ export const verificarToken = async (req, res, next) => {
 
     // Agregar usuario a la request
     req.usuario = {
-      id: usuario.id,
+      ID_usuario: usuario.ID_usuario,
       email: usuario.email,
       nombre: usuario.nombre,
       apellido: usuario.apellido,
       rol: usuario.rol,
-      nombre_empresa: usuario.nombre_empresa,
+      ID_Empresa: usuario.ID_Empresa,
+      Nombre_Empresa: usuario.Nombre_Empresa,
       rfc: usuario.rfc
     };
 

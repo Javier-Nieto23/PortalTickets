@@ -41,15 +41,15 @@ export const ticketController = {
   // POST /api/tickets - Crear nuevo ticket
   create: async (req, res) => {
     try {
-      const { titulo, descripcion, estado, prioridad, creadoPor, usuarioId, empresa } = req.body;
+      const { titulo, descripcion, estado, prioridad, ID_empleado, ID_Empresa } = req.body;
 
       // Validaciones
       if (!titulo || titulo.trim() === '') {
         return res.status(400).json({ message: 'El título es requerido' });
       }
 
-      if (!usuarioId) {
-        return res.status(400).json({ message: 'ID de usuario requerido' });
+      if (!ID_empleado) {
+        return res.status(400).json({ message: 'ID de empleado requerido' });
       }
 
       const nuevoTicket = await TicketModel.create({
@@ -57,9 +57,8 @@ export const ticketController = {
         descripcion,
         estado,
         prioridad,
-        creadoPor,
-        usuarioId,
-        empresa
+        ID_empleado,
+        ID_Empresa
       });
 
       res.status(201).json({
