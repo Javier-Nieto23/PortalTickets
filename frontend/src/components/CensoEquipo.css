@@ -624,3 +624,120 @@
   background: #F44336;
   color: white;
 }
+
+.mensaje-flotante.info {
+  background: #2196F3;
+  color: white;
+}
+
+/* Botones de acciones en tarjetas */
+.equipo-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-editar,
+.btn-eliminar {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.btn-editar {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+}
+
+.btn-editar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.btn-eliminar {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+}
+
+.btn-eliminar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Modal de confirmación */
+.modal-confirmar {
+  max-width: 500px;
+}
+
+.modal-body-confirmar {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.modal-body-confirmar > p:first-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.equipo-eliminar-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.equipo-eliminar-info p {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.equipo-eliminar-info strong {
+  color: #333;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.warning-text {
+  color: #e67e22;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.btn-eliminar-confirm {
+  flex: 1;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-eliminar-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+}
+
+.btn-eliminar-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

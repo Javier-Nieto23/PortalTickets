@@ -24,11 +24,25 @@ export const authController = {
         });
       }
 
+      // Normalizar campos para el frontend
+      const normalizedUser = {
+        ID_usuario: user.id_usuario,
+        email: user.email,
+        nombre: user.nombre || user.nombre_usuario,
+        apellido: user.apellido_usuario,
+        rol: user.rol,
+        activo: user.activo,
+        ID_Empresa: user.id_empresa,
+        Nombre_Empresa: user.nombre_empresa,
+        rfc: user.rfc
+      };
+
       res.json({
         message: 'Login exitoso',
-        user: user
+        user: normalizedUser
       });
     } catch (error) {
+      console.error('Error en login:', error);
       res.status(500).json({ 
         message: 'Error al iniciar sesión', 
         error: error.message 
@@ -85,9 +99,22 @@ export const authController = {
         ID_Empresa: empresa.id_empresa
       });
 
+      // Normalizar respuesta
+      const normalizedUser = {
+        ID_usuario: newUser.id_usuario,
+        email: newUser.email,
+        nombre: newUser.nombre || newUser.nombre_usuario,
+        apellido: newUser.apellido_usuario,
+        rol: newUser.rol,
+        activo: newUser.activo,
+        ID_Empresa: newUser.id_empresa,
+        Nombre_Empresa: nombreEmpresa,
+        rfc: newUser.rfc
+      };
+
       res.status(201).json({
         message: 'Usuario registrado exitosamente',
-        user: newUser
+        user: normalizedUser
       });
     } catch (error) {
       res.status(500).json({ 

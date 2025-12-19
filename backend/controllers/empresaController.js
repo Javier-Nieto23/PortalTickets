@@ -69,6 +69,43 @@ export const crearEmpresa = async (req, res) => {
 
 
 
+// Verificar si una empresa existe por nombre
+export const verificarEmpresa = async (req, res) => {
+  try {
+    const { nombre } = req.query;
+
+    if (!nombre) {
+      return res.status(400).json({ 
+        mensaje: 'El nombre de la empresa es requerido' 
+      });
+    }
+
+    const empresa = await Empresa.findByName(nombre);
+
+    if (empresa) {
+      return res.json({
+        existe: true,
+        empresa: {
+          ID_Empresa: empresa.ID_Empresa,
+          Nombre_Empresa: empresa.Nombre_Empresa,
+          rfc: empresa.rfc
+        }
+      });
+    } else {
+      return res.json({
+        existe: false,
+        mensaje: 'La empresa no existe en el sistema'
+      });
+    }
+  } catch (error) {
+    console.error('Error al verificar empresa:', error);
+    res.status(500).json({ 
+      mensaje: 'Error al verificar empresa',
+      error: error.message 
+    });
+  }
+};
+
 // Actualizar empresa
 export const actualizarEmpresa = async (req, res) => {
   try {

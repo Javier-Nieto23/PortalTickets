@@ -64,7 +64,10 @@ export const Equipo = {
   // Obtener equipos de un usuario
   async findByUsuarioId(usuario_id) {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
+      SELECT e.id, e.usuario_id, e.tipo_equipo, e.marca, e.modelo, e.numero_serie, 
+             e.nombre_empleado AS "Nombre_Empleado", e.sistema_operativo, e.procesador, 
+             e.ram, e.disco_duro, e.observaciones, e.created_at, e.updated_at,
+             u.nombre, u.apellido_usuario AS apellido, u.Email, emp.Nombre_Empresa
       FROM equipos e
       JOIN usuarios u ON e.usuario_id = u.ID_usuario
       LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
@@ -79,7 +82,10 @@ export const Equipo = {
   // Obtener equipo por ID
   async findById(id) {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
+      SELECT e.id, e.usuario_id, e.tipo_equipo, e.marca, e.modelo, e.numero_serie, 
+             e.nombre_empleado AS "Nombre_Empleado", e.sistema_operativo, e.procesador, 
+             e.ram, e.disco_duro, e.observaciones, e.created_at, e.updated_at,
+             u.nombre, u.apellido_usuario AS apellido, u.Email, emp.Nombre_Empresa
       FROM equipos e
       JOIN usuarios u ON e.usuario_id = u.ID_usuario
       LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
@@ -93,7 +99,10 @@ export const Equipo = {
   // Obtener todos los equipos (admin)
   async findAll() {
     const sql = `
-      SELECT e.*, u.nombre, u.apellido, u.email, emp.Nombre_Empresa
+      SELECT e.id, e.usuario_id, e.tipo_equipo, e.marca, e.modelo, e.numero_serie, 
+             e.nombre_empleado AS "Nombre_Empleado", e.sistema_operativo, e.procesador, 
+             e.ram, e.disco_duro, e.observaciones, e.created_at, e.updated_at,
+             u.nombre, u.apellido_usuario AS apellido, u.Email, emp.Nombre_Empresa
       FROM equipos e
       JOIN usuarios u ON e.usuario_id = u.ID_usuario
       LEFT JOIN Empresas emp ON u.ID_Empresa = emp.ID_Empresa
@@ -108,22 +117,24 @@ export const Equipo = {
   async update(id, equipoData) {
     const sql = `
       UPDATE equipos
-      SET tipo_equipo = $1,
-          marca = $2,
-          modelo = $3,
-          numero_serie = $4,
-          Nombre_Empleado = $5,
-          sistema_operativo = $6,
-          procesador = $7,
-          ram = $8,
-          disco_duro = $9,
-          observaciones = $10,
+      SET usuario_id = $1,
+          tipo_equipo = $2,
+          marca = $3,
+          modelo = $4,
+          numero_serie = $5,
+          Nombre_Empleado = $6,
+          sistema_operativo = $7,
+          procesador = $8,
+          ram = $9,
+          disco_duro = $10,
+          observaciones = $11,
           updated_at = CURRENT_TIMESTAMP
-      WHERE id = $11
+      WHERE id = $12
       RETURNING *
     `;
     
     const values = [
+      equipoData.usuario_id,
       equipoData.tipo_equipo,
       equipoData.marca,
       equipoData.modelo,

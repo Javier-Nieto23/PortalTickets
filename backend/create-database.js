@@ -111,7 +111,7 @@ async function createDatabase() {
     console.log('7. Insertando empresa de prueba...');
     const empresaResult = await newClient.query(`
       INSERT INTO Empresas (Nombre_Empresa, rfc)
-      VALUES ('CAAST', 'CAAST123456789')
+      VALUES ('CAAST', 'CAA123456ABC')
       RETURNING ID_Empresa
     `);
     const empresaId = empresaResult.rows[0].id_empresa;

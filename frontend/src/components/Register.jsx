@@ -7,6 +7,7 @@ function Register({ onRegister, onBackToLogin }) {
     apellido: '',
     rfc: '',
     nombreEmpresa: '',
+    rfcEmpresa: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -184,6 +185,23 @@ function Register({ onRegister, onBackToLogin }) {
               required
             />
             {errors.nombreEmpresa && <span className="error-message">{errors.nombreEmpresa}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="rfcEmpresa">RFC Empresa (Opcional)</label>
+            <input
+              type="text"
+              id="rfcEmpresa"
+              name="rfcEmpresa"
+              value={formData.rfcEmpresa}
+              onChange={handleChange}
+              disabled={isSubmitting}
+              className={errors.rfcEmpresa ? 'error' : ''}
+              maxLength="13"
+              placeholder="RFC de la empresa"
+              style={{ textTransform: 'uppercase' }}
+            />
+            {errors.rfcEmpresa && <span className="error-message">{errors.rfcEmpresa}</span>}
           </div>
 
           <div className="form-group">
