@@ -143,17 +143,14 @@ export const actualizarEquipo = async (req, res) => {
         // Buscar o crear la empresa
         const empresaDB = await Empresa.findOrCreate(empresaNueva, rfcEmpresa);
         console.log('Empresa DB:', empresaDB);
-        console.log('ID_Empresa de empresaDB:', empresaDB.ID_Empresa, 'o id_empresa:', empresaDB.id_empresa);
+        console.log('ID_Empresa de empresaDB:', empresaDB.ID_Empresa);
         
-        // Buscar o crear un usuario cliente para esa empresa (usar id en minúsculas o mayúsculas)
-        const idEmpresa = empresaDB.ID_Empresa || empresaDB.id_empresa;
-        console.log('Pasando ID_Empresa a findOrCreateCliente:', idEmpresa);
-        
-        const clienteUsuario = await UserModel.findOrCreateCliente(idEmpresa, empresaNueva);
+        // Buscar o crear un usuario cliente para esa empresa
+        const clienteUsuario = await UserModel.findOrCreateCliente(empresaDB.ID_Empresa, empresaNueva);
         console.log('Cliente creado/encontrado:', clienteUsuario);
         
-        // Actualizar el usuario_id al nuevo cliente (puede estar en minúsculas o mayúsculas)
-        usuario_id = clienteUsuario.ID_usuario || clienteUsuario.id_usuario;
+        // Actualizar el usuario_id al nuevo cliente
+        usuario_id = clienteUsuario.ID_usuario;
         console.log('usuario_id asignado:', usuario_id);
       } else {
         console.log('Empresa no cambió, manteniendo usuario_id:', usuario_id);
@@ -221,18 +218,16 @@ export const crearEquipoManual = async (req, res) => {
     const empresaDB = await Empresa.findOrCreate(empresa, rfcEmpresa);
     console.log('Empresa DB (manual):', empresaDB);
     
-    // 2. Buscar o crear un usuario cliente para esa empresa (manejar mayúsculas/minúsculas)
-    const idEmpresa = empresaDB.ID_Empresa || empresaDB.id_empresa;
-    console.log('ID_Empresa para cliente (manual):', idEmpresa);
+    // 2. Buscar o crear un usuario cliente para esa empresa
+    console.log('ID_Empresa para cliente (manual):', empresaDB.ID_Empresa);
     
-    const clienteUsuario = await UserModel.findOrCreateCliente(idEmpresa, empresa);
+    const clienteUsuario = await UserModel.findOrCreateCliente(empresaDB.ID_Empresa, empresa);
     console.log('Cliente creado (manual):', clienteUsuario);
     
-    // 3. Crear el equipo asociado al cliente (manejar mayúsculas/minúsculas)
-    const idUsuario = clienteUsuario.ID_usuario || clienteUsuario.id_usuario;
-    console.log('ID_usuario para equipo (manual):', idUsuario);
+    // 3. Crear el equipo asociado al cliente
+    console.log('ID_usuario para equipo (manual):', clienteUsuario.ID_usuario);
     
-    if (!idUsuario) {
+    if (!clienteUsuario.ID_usuario) {
       console.error('ERROR: No se pudo obtener ID de usuario');
       return res.status(500).json({ 
         mensaje: 'Error al crear usuario cliente para la empresa' 
@@ -240,7 +235,7 @@ export const crearEquipoManual = async (req, res) => {
     }
     
     const nuevoEquipo = await Equipo.create({
-      usuario_id: idUsuario,
+      usuario_id: clienteUsuario.ID_usuario,
       tipo_equipo,
       marca,
       modelo,

@@ -2,19 +2,19 @@ import db from '../config/database.js';
 
 class Empresa {
   static async findAll() {
-    const query = 'SELECT * FROM Empresas ORDER BY Nombre_Empresa';
+    const query = 'SELECT ID_Empresa, Nombre_Empresa, rfc FROM Empresas ORDER BY Nombre_Empresa';
     const { rows } = await db.query(query);
     return rows;
   }
 
   static async findById(id) {
-    const query = 'SELECT * FROM Empresas WHERE ID_Empresa = $1';
+    const query = 'SELECT ID_Empresa, Nombre_Empresa, rfc FROM Empresas WHERE ID_Empresa = $1';
     const { rows } = await db.query(query, [id]);
     return rows[0];
   }
 
   static async findByName(nombreEmpresa) {
-    const query = 'SELECT * FROM Empresas WHERE Nombre_Empresa = $1';
+    const query = 'SELECT ID_Empresa, Nombre_Empresa, rfc FROM Empresas WHERE Nombre_Empresa = $1';
     const { rows } = await db.query(query, [nombreEmpresa]);
     return rows[0];
   }
@@ -24,7 +24,7 @@ class Empresa {
     const query = `
       INSERT INTO Empresas (Nombre_Empresa, rfc)
       VALUES ($1, $2)
-      RETURNING *
+      RETURNING ID_Empresa, Nombre_Empresa, rfc
     `;
     const { rows } = await db.query(query, [Nombre_Empresa, rfc || null]);
     return rows[0];
